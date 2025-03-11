@@ -1,12 +1,15 @@
 package com.example.lockin.model
 
+import java.io.Serializable
+import java.util.Date
+
 data class Task(
     val id: Int,
     val name: String,
     val category: String,
-    val beginningDate: String, // Store as Unix timestamp (milliseconds)
-    val finishingDate: String, // Store as Unix timestamp (milliseconds)
+    val beginningDate: Date, // Now a Date object
+    val finishingDate: Date, // Now a Date object
     val progress: Int, // Percentage (0-100)
     val subtasks: List<Subtask> = emptyList(),
-    val participant: String // Can be an email, username, etc.
-)
+    val participants: List<User> // Now a list of participant identifiers (email, username, etc.)
+) : Serializable

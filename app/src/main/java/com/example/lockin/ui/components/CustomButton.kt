@@ -22,7 +22,6 @@ fun CustomButton(
     Button(
         onClick = onClick,
         modifier = Modifier
-            .padding(12.dp) // Slightly increased padding
             .height(52.dp), // Increased height for better visibility
         colors = ButtonDefaults.buttonColors(
             containerColor = backgroundColor,

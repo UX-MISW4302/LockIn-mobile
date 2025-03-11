@@ -1,5 +1,8 @@
 package com.example.lockin.ui.screens
 
+import android.graphics.BitmapFactory
+import androidx.compose.foundation.Image
+import coil.compose.AsyncImage
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
@@ -7,10 +10,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.lockin.model.Task
+import com.example.lockin.model.User
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.*
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -22,23 +31,37 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.unit.sp
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.LinearProgressIndicator
+import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
+import coil.compose.rememberAsyncImagePainter
+import coil.compose.rememberImagePainter
+import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
+import com.bumptech.glide.integration.compose.GlideImage
+import com.example.lockin.model.Subtask
 import com.example.lockin.ui.components.CustomButton
 
 
 @Composable
 fun TaskView(navController: NavController, task: Task) {
+
+    val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+
     Column(
         modifier = Modifier
             .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        Spacer(modifier = Modifier.height(20.dp))
+        Spacer(modifier = Modifier.height(16.dp))
 
 
         Text(
@@ -56,8 +79,11 @@ fun TaskView(navController: NavController, task: Task) {
                 .background(
                     brush = Brush.horizontalGradient(
                         colors = listOf(
-                            Color(0xFF7FFFD4),
-                            Color(0xFF8A2BE2)
+                            Color(0xFF52BFBA),
+                            Color(0xFF6DA0E4),
+                            Color(0xFF5952E7),
+                            Color(0xFFE551E0),
+                            Color(0xFFC91F22)
                         ) // Aquamarine to Violet
                     )
                 )
@@ -66,10 +92,11 @@ fun TaskView(navController: NavController, task: Task) {
 
         Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 32.dp),
-            //horizontalAlignment = Alignment.CenterHorizontally
-        ) {
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
+                .padding(horizontal = 32.dp),// Enables scrolling
+            horizontalAlignment = Alignment.CenterHorizontally
+        ){
             Text(text = "Categoría",
                 fontSize = 22.sp)
 
@@ -86,7 +113,7 @@ fun TaskView(navController: NavController, task: Task) {
                 Text(text = task.category, fontSize = 30.sp, color = Color.Black)
             }
 
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(6.dp))
 
 
 
@@ -107,7 +134,8 @@ fun TaskView(navController: NavController, task: Task) {
                             .padding(8.dp),
                         contentAlignment = Alignment.Center
                     ) {
-                        Text(text = task.beginningDate, color = Color.Black)
+                        Text(text = dateFormat.format(task.beginningDate), color = Color.Black)
+
                     }
                 }
 
@@ -128,12 +156,13 @@ fun TaskView(navController: NavController, task: Task) {
                             .padding(8.dp),
                         contentAlignment = Alignment.Center
                     ) {
-                        Text(text = task.finishingDate, color = Color.Black)
+                        Text(text = dateFormat.format(task.finishingDate), color = Color.Black)
+
                     }
                 }
             }
 
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(6.dp))
 
             Text(text = "Progreso",
                 fontSize = 22.sp)
@@ -158,27 +187,231 @@ fun TaskView(navController: NavController, task: Task) {
                             .clip(RoundedCornerShape(6.dp)) // Ensures rounded edges for progress
                             .background(
                                 brush = Brush.horizontalGradient(
-                                    colors = listOf(Color(0xFF7FFFD4), Color(0xFF8A2BE2)) // Aquamarine to Neon Purple
+                                    colors = listOf(Color(0xFF52BFBA),
+                                        Color(0xFF6DA0E4),
+                                        Color(0xFF5952E7),
+                                        Color(0xFFE551E0),
+                                        Color(0xFFC91F22)) // Aquamarine to Neon Purple
                                 )
                             )
                     )
                 }
 
 
-                Spacer(modifier = Modifier.width(8.dp))
+                Spacer(modifier = Modifier.width(6.dp))
 
                 Text(
                     text = "${task.progress}%",
                     color = Color.Black
                 )
             }
+
+
+            Spacer(modifier = Modifier.height(6.dp))
+
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth(), // Takes full width
+                contentAlignment = Alignment.Center // Centers content inside
+            ) {
+                CustomButton(
+                    text = "Crear Subtarea",
+                    onClick = { navController.navigate("createSubtask/1") },
+                    backgroundColor = Color.Black,
+                    textColor = Color.White
+                )
+            }
+
+            Spacer(modifier = Modifier.height(6.dp))
+
+            Text(text = "Subtareas",
+                fontSize = 22.sp)
+
+            SubtasksContainer(task = task, subtasks = task.subtasks, navController = navController)
+
+            Spacer(modifier = Modifier.height(6.dp))
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = "Participantes",
+                    fontSize = 18.sp,
+                    color = Color.Black
+                )
+
+                Button(
+                    onClick = { /* Handle add participant action */ },
+                    colors = ButtonDefaults.buttonColors(containerColor = Color.Black),
+                    contentPadding = PaddingValues(horizontal = 8.dp, vertical = 4.dp),
+                    modifier = Modifier
+                        .height(30.dp)
+                        .width(90.dp)
+                ) {
+                    Text(text = "Agregar +", color = Color.White, fontSize = 12.sp)
+                }
+            }
+
+            Spacer(modifier = Modifier.height(2.dp))
+
+            LazyRow(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                items(task.participants) { participant ->
+                    LoadBitmapImageFromAssets(assetName = participant.photo)
+                }
+            }
         }
-        CustomButton(
-            text = "Crear Subtarea",
-            onClick = { /* Handle subtask creation */ },
-            backgroundColor = Color.Black,
-            textColor = Color.White
-        )
+
 
     }
 }
+
+@Composable
+fun SubtasksContainer(task: Task, subtasks: List<Subtask>, navController: NavController) {
+    val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(200.dp) // Set a fixed height for scrollability
+            .border(1.dp, Color.Black)
+            .background(Color.White)
+            .padding(8.dp)
+    ) {
+        LazyColumn(
+            modifier = Modifier.fillMaxSize()
+        ) {
+            items(subtasks) { subtask ->
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 4.dp)
+                        .border(1.dp, Color.Black)
+                        .background(
+                            brush = Brush.horizontalGradient(
+                                colors = listOf(
+                                    Color(0x8852BFBA), // Lighter teal
+                                    Color(0x886DA0E4), // Lighter blue
+                                    Color(0x885952E7), // Lighter purple
+                                    Color(0x88E551E0), // Lighter pink
+                                    Color(0x88C91F22)  // Lighter red
+                                )
+                                // Pastel Light Blue to Light Red
+                            )
+                        )
+                        .padding(8.dp)
+                        .clickable { navController.navigate("SubtaskScreen/${task.id}/${subtask.id}") } // Navigate to subtask screen
+                ) {
+                    Column(
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        // Subtask name aligned to the left
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.Start
+                        ) {
+                            Text(text = subtask.name, color = Color.Black)
+                        }
+
+                        // Dates centered
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.Center
+                        ) {
+                            Text(
+                                text = "${dateFormat.format(subtask.beginningDate)}    -    ${dateFormat.format(subtask.finishingDate)}",
+                                color = Color.Black
+                            )
+                        }
+                    }
+                }
+
+
+            }
+        }
+    }
+
+
+
+}
+
+@Composable
+fun LoadBitmapImageFromAssets(assetName: String, modifier: Modifier = Modifier) {
+    val context = LocalContext.current
+    val bitmap = remember {
+        try {
+            val inputStream = context.assets.open(assetName)
+            BitmapFactory.decodeStream(inputStream)
+        } catch (e: Exception) {
+            null
+        }
+    }
+
+    bitmap?.let {
+        Image(
+            bitmap = it.asImageBitmap(),
+            contentDescription = null,
+            modifier = modifier
+                .size(80.dp) // Size of the circle
+                .clip(CircleShape) // Circular shape
+                .border(2.dp, Color.Black, CircleShape) // Black border
+        )
+    }
+}
+
+
+
+@OptIn(ExperimentalGlideComposeApi::class)
+@Composable
+fun ParticipantsSection(participants: List<User>, onAddClick: () -> Unit) {
+    Column(
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        // Row with "Participantes" label and "Agregar +" button
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(text = "Participantes")
+
+            Button(
+                onClick = onAddClick,
+                modifier = Modifier
+                    .height(36.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color.Black,
+                    contentColor = Color.White
+                )
+            ) {
+                Text(text = "Agregar +", fontSize = 14.sp)
+            }
+        }
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        // Scrollable Row for participant photos
+        LazyRow(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            items(participants) { participant ->
+                Image(
+                    painter = rememberAsyncImagePainter(participant.photo),
+                    contentDescription = participant.name,
+                    modifier = Modifier
+                        .size(50.dp) // Image size
+                        .clip(CircleShape) // Makes it circular
+                        .border(2.dp, Color.Black, CircleShape) // Black border
+                )
+            }
+        }
+    }
+}
+
+
