@@ -10,6 +10,25 @@ import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.material3.Typography
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.sp
+import com.example.lockin.R
+
+
+val OswaldFontFamily = FontFamily(
+    Font(R.font.oswald_regular, FontWeight.Normal),
+    Font(R.font.oswald_bold, FontWeight.Bold)
+)
+
+// Apply Oswald to all text styles
+val customTypography = Typography(
+    titleLarge = TextStyle(fontFamily = OswaldFontFamily, fontWeight = FontWeight.Bold, fontSize = 24.sp),
+    bodyLarge = TextStyle(fontFamily = OswaldFontFamily, fontWeight = FontWeight.Normal, fontSize = 16.sp),
+)
 
 private val DarkColorScheme = darkColorScheme(
     primary = Purple80,
@@ -52,7 +71,8 @@ fun LockInTheme(
 
     MaterialTheme(
         colorScheme = colorScheme,
-        typography = Typography,
+        typography = customTypography,
         content = content
     )
 }
+
