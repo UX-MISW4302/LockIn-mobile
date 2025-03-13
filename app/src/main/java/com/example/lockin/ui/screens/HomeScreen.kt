@@ -19,6 +19,14 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.text.style.TextAlign
 
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import java.util.*
+
 @Composable
 fun HomeScreen(navController: NavController) {
     val sampleTasks = listOf(
@@ -85,13 +93,25 @@ fun HomeScreen(navController: NavController) {
 fun TaskCard(task: Task, navController: NavController) {
     val dateFormatter = SimpleDateFormat("dd/MM", Locale.getDefault())
 
+    // Lista de colores para la barra de progreso
+    val progressColors = listOf(
+        Color(0xFF52BFBA),
+        Color(0xFF6DA0E4),
+        Color(0xFF5952E7),
+        Color(0xFFE551E0),
+        Color(0xFFC91F22)
+    )
+    val progressColor = progressColors[task.id % progressColors.size] // Selección dinámica
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 8.dp)
+            .border(1.dp, Color(0xFFDDDDDD), RoundedCornerShape(12.dp)) // Borde gris
             .clickable { navController.navigate("task/${task.id}") },
-        elevation = CardDefaults.cardElevation(4.dp),
-        shape = MaterialTheme.shapes.medium
+        elevation = CardDefaults.cardElevation(6.dp), // Elevación para sombra
+        shape = RoundedCornerShape(12.dp),
+        colors = CardDefaults.cardColors(containerColor = Color.White) // Fondo blanco
     ) {
         Column(
             modifier = Modifier.padding(16.dp)
@@ -100,17 +120,24 @@ fun TaskCard(task: Task, navController: NavController) {
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Text(text = task.name, fontSize = 18.sp)
-                Text(text = "${dateFormatter.format(task.beginningDate)} - ${dateFormatter.format(task.finishingDate)}", fontSize = 14.sp)
+                Text(text = task.name, fontSize = MaterialTheme.typography.bodyLarge.fontSize)
+                Text(
+                    text = "${dateFormatter.format(task.beginningDate)} - ${dateFormatter.format(task.finishingDate)}",
+                    fontSize = MaterialTheme.typography.bodySmall.fontSize,
+                    color = Color.Gray
+                )
             }
             Spacer(modifier = Modifier.height(8.dp))
             LinearProgressIndicator(
                 progress = { task.progress / 100f },
-                modifier = Modifier.fillMaxWidth(),
-                color = Color(0xFFBB86FC) // Morado claro
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(6.dp)
+                    .border(1.dp, Color.Gray, RoundedCornerShape(50)), // Borde gris a la barra
+                color = progressColor // Color dinámico
             )
             Spacer(modifier = Modifier.height(4.dp))
-            Text(text = "${task.progress}%", fontSize = 14.sp)
+            Text(text = "${task.progress}%", fontSize = MaterialTheme.typography.bodySmall.fontSize)
         }
     }
 }
