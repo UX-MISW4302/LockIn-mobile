@@ -1,4 +1,5 @@
 package com.example.lockin.ui.screens
+import androidx.compose.foundation.background
 import com.example.lockin.model.Task
 
 import androidx.compose.foundation.clickable
@@ -15,24 +16,61 @@ import java.util.*
 
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.text.style.TextAlign
 
 @Composable
 fun HomeScreen(navController: NavController) {
     val sampleTasks = listOf(
-        Task(1, "Procesos de desarrollo ágil", "Software", Date(2024, 2, 21), Date(2024, 2, 24), 20, emptyList(), emptyList()),
-        Task(2, "Diseño UX/UI", "Diseño", Date(2024, 3, 1), Date(2024, 3, 5), 50, emptyList(), emptyList()),
-        Task(3, "Modelado de datos", "Bases de Datos", Date(2024, 4, 10), Date(2024, 4, 15), 80, emptyList(), emptyList())
+        Task(1, "Project Alpha", "Software", Date(2024, 2, 12), Date(2024, 12, 31), 50, emptyList(), emptyList()),
+        Task(2, "Study AI", "Diseño", Date(2024, 1, 1), Date(2024, 1, 31), 30, emptyList(), emptyList()),
+        Task(3, "Develop App", "Bases de Datos", Date(2024, 1, 2), Date(2024, 3, 3), 75, emptyList(), emptyList())
+    )
+
+    val gradientColors = listOf(
+        Color(0x0C52BFBA), // 3% Opacidad
+        Color(0x176DA0E4), // 9% Opacidad
+        Color(0x0C5952E7), // 3% Opacidad
+        Color(0x11E551E0), // 7% Opacidad
+        Color(0x03C91F22)  // 1% Opacidad
     )
 
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp)
+            .background(
+                brush = Brush.linearGradient(
+                    colors = gradientColors
+                )
+            ),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
+
         Text(
             text = "Tareas",
-            fontSize = 24.sp,
-            modifier = Modifier.padding(bottom = 16.dp)
+            fontSize = 32.sp,
+            textAlign = TextAlign.Center,
+        )
+
+        Spacer(modifier = Modifier.height(10.dp))
+
+
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(4.dp) // Thickness of the line
+                .background(
+                    brush = Brush.horizontalGradient(
+                        colors = listOf(
+                            Color(0xFF52BFBA),
+                            Color(0xFF6DA0E4),
+                            Color(0xFF5952E7),
+                            Color(0xFFE551E0),
+                            Color(0xFFC91F22)
+                        ) // Aquamarine to Violet
+                    )
+                )
         )
 
         LazyColumn {
