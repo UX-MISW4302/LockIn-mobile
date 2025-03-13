@@ -32,7 +32,7 @@ fun AppNavHost(navController: NavHostController, paddingValues: PaddingValues) {
     val alarmViewModel: AlarmViewModel = viewModel()
     NavHost(
         navController = navController,
-        startDestination = "login",
+        startDestination = "task/1",
         modifier = Modifier.padding(paddingValues) // Ensures screens respect the navbar
     ) {
         composable("login") { LogInScreen(navController) }

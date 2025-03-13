@@ -16,23 +16,15 @@ import androidx.compose.ui.unit.sp
 fun CustomButton(
     text: String,
     onClick: () -> Unit,
-    backgroundColor: Color = Color.Black, // Default to black
-    textColor: Color = Color.White // Default to white
+    backgroundColor: Color,
+    textColor: Color,
+    modifier: Modifier = Modifier // Add this line
 ) {
     Button(
         onClick = onClick,
-        modifier = Modifier
-            .height(52.dp), // Increased height for better visibility
-        colors = ButtonDefaults.buttonColors(
-            containerColor = backgroundColor,
-            contentColor = textColor
-        )
+        colors = ButtonDefaults.buttonColors(backgroundColor),
+        modifier = modifier // Apply the modifier
     ) {
-        Text(
-            text = text,
-            fontWeight = FontWeight.Bold,
-            fontSize = 18.sp, // Slightly increased text size
-            color = textColor
-        )
+        Text(text = text, color = textColor)
     }
 }

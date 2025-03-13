@@ -95,19 +95,24 @@ fun TaskView(navController: NavController, task: Task) {
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
                 .padding(horizontal = 32.dp),// Enables scrolling
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.Start
         ){
-            Text(text = "Categoría",
-                fontSize = 22.sp)
+            Text(
+                text = "Categoría",
+                fontSize = 22.sp,
+                color = Color.Black,
+                modifier = Modifier.align(Alignment.Start) // Aligns text to the left
+            )
 
 
 
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .border(1.dp, Color.Black)
-                    .background(Color.White)
-                    .padding(8.dp),
+                    .height(52.dp) // Set height to match Figma
+                    .border(1.dp, Color.Black, RoundedCornerShape(12.dp)) // Border with rounded corners
+                    .clip(RoundedCornerShape(12.dp)) // Clipping for rounded edges
+                    .background(Color.White),
                 contentAlignment = Alignment.Center
             ) {
                 Text(text = task.category, fontSize = 30.sp, color = Color.Black)
@@ -125,16 +130,21 @@ fun TaskView(navController: NavController, task: Task) {
                     modifier = Modifier.weight(1f), // Each column takes equal space
                     horizontalAlignment = Alignment.Start
                 ) {
-                    Text(text = "Fecha de Inicio")
+                    Text(
+                        text = "Fecha de Inicio",
+                        fontSize = 24.sp, // Increased size
+                        color = Color.Black
+                    )
                     Box(
                         modifier = Modifier
                             .fillMaxWidth(0.8f) // Adjust the box width inside the column
-                            .border(1.dp, Color.Black)
-                            .background(Color.White)
-                            .padding(8.dp),
+                            .height(52.dp) // Set height to match Figma
+                            .border(1.dp, Color.Black, RoundedCornerShape(12.dp)) // Border with rounded corners
+                            .clip(RoundedCornerShape(12.dp)) // Clipping for rounded edges
+                            .background(Color.White),
                         contentAlignment = Alignment.Center
                     ) {
-                        Text(text = dateFormat.format(task.beginningDate), color = Color.Black)
+                        Text(text = dateFormat.format(task.beginningDate), fontSize = 20.sp, color = Color.Black)
 
                     }
                 }
@@ -145,18 +155,20 @@ fun TaskView(navController: NavController, task: Task) {
                 ) {
                     Text(
                         text = "Fecha de Fin",
+                        fontSize = 24.sp,
                         modifier = Modifier.align(Alignment.Start)
                                 .padding(start = 32.dp)// Forces the text to align to the left
                     )
                     Box(
                         modifier = Modifier
                             .fillMaxWidth(0.8f) // Adjust the box width inside the column
-                            .border(1.dp, Color.Black)
-                            .background(Color.White)
-                            .padding(8.dp),
+                            .height(52.dp) // Set height to match Figma
+                            .border(1.dp, Color.Black, RoundedCornerShape(12.dp)) // Border with rounded corners
+                            .clip(RoundedCornerShape(12.dp)) // Clipping for rounded edges
+                            .background(Color.White),
                         contentAlignment = Alignment.Center
                     ) {
-                        Text(text = dateFormat.format(task.finishingDate), color = Color.Black)
+                        Text(text = dateFormat.format(task.finishingDate), fontSize = 20.sp,color = Color.Black)
 
                     }
                 }
@@ -211,16 +223,28 @@ fun TaskView(navController: NavController, task: Task) {
 
             Box(
                 modifier = Modifier
-                    .fillMaxWidth(), // Takes full width
-                contentAlignment = Alignment.Center // Centers content inside
+                    .fillMaxWidth(), // Makes the Box take full width
+                contentAlignment = Alignment.Center // Centers the button inside
             ) {
-                CustomButton(
-                    text = "Crear Subtarea",
-                    onClick = { navController.navigate("createSubtask/1") },
-                    backgroundColor = Color.Black,
-                    textColor = Color.White
-                )
+                Box(
+                    modifier = Modifier
+                        .width(180.dp)  // Rectangle width
+                        .height(60.dp)  // Rectangle height
+                        .clip(RoundedCornerShape(12.dp)) // Slightly rounded corners
+                        .background(Color.Black) // Button background
+                        .clickable { navController.navigate("createSubtask/1") }, // Click action
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = "Crear Subtarea",
+                        color = Color.White,
+                        fontSize = 18.sp
+                    )
+                }
             }
+
+
+
 
             Spacer(modifier = Modifier.height(6.dp))
 

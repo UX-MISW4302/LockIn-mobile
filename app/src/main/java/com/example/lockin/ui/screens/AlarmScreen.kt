@@ -80,11 +80,11 @@ fun AlarmScreen(navController: NavController, task: Task, subtask: Subtask, alar
 
                 Spacer(modifier = Modifier.height(8.dp))
 
-                Text(text = subtask.name, fontSize = 32.sp)
+                Text(text = subtask.name, fontSize = 28.sp)
 
                 Spacer(modifier = Modifier.height(8.dp))
 
-                Text(text = alarm.name, fontSize = 24.sp)
+                Text(text = alarm.name, fontSize = 28.sp)
 
                 Spacer(modifier = Modifier.height(8.dp))
 
@@ -114,23 +114,23 @@ fun AlarmScreen(navController: NavController, task: Task, subtask: Subtask, alar
                             .clip(RoundedCornerShape(6.dp)) // Ensures both layers have rounded edges
                             .background(Color.White) // White background for the empty space
                     ) {
+
                         Box(
                             modifier = Modifier
-                                .fillMaxWidth(13f / 100f) // Fills based on progress
+                                .fillMaxWidth(0.5f) // Fills based on progress
                                 .fillMaxHeight()
                                 .clip(RoundedCornerShape(6.dp)) // Ensures rounded edges for progress
                                 .background(
                                     brush = Brush.horizontalGradient(
                                         colors = listOf(
-                                            Color(0xFF52BFBA),
-                                            Color(0xFF6DA0E4),
-                                            Color(0xFF5952E7),
-                                            Color(0xFFE551E0),
-                                            Color(0xFFC91F22)
-                                        ) // Aquamarine to Neon Purple
+                                            Color(0xFF0A7ED9),  // Full color
+                                            Color(0xFF0A7ED9).copy(alpha = 0.5f), // Semi-transparent
+                                            Color.Transparent  // Fully faded out
+                                        )
                                     )
                                 )
                         )
+
                     }
                 }
 
@@ -174,18 +174,16 @@ fun AlarmScreen(navController: NavController, task: Task, subtask: Subtask, alar
                     ) {
                         Box(
                             modifier = Modifier
-                                .fillMaxWidth(50f / 100f) // Fills based on progress
+                                .fillMaxWidth(0.5f) // Fills based on progress
                                 .fillMaxHeight()
                                 .clip(RoundedCornerShape(6.dp)) // Ensures rounded edges for progress
                                 .background(
                                     brush = Brush.horizontalGradient(
                                         colors = listOf(
-                                            Color(0xFF52BFBA),
-                                            Color(0xFF6DA0E4),
-                                            Color(0xFF5952E7),
-                                            Color(0xFFE551E0),
-                                            Color(0xFFC91F22)
-                                        ) // Aquamarine to Neon Purple
+                                            Color(0xFF5952E7),  // Full color
+                                            Color(0xFF5952E7).copy(alpha = 0.5f), // Semi-transparent
+                                            Color.Transparent  // Fully faded out
+                                        )
                                     )
                                 )
                         )
@@ -221,17 +219,16 @@ fun AlarmScreen(navController: NavController, task: Task, subtask: Subtask, alar
                             Color(0xFFEFD9F5)  // Soft Pink
                         )
                     ),
-                    )
-                .padding(vertical = 16.dp, horizontal = 24.dp),
+                    ),
+
             contentAlignment = Alignment.Center
         ) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Text(
                     text = "Tiempo restante",
-                    fontSize = 18.sp,
+                    fontSize = 36.sp,
                     color = Color.Black
                 )
-                Spacer(modifier = Modifier.height(8.dp))
 
                 // Convert duration (milliseconds) to hours & minutes
                 val totalSeconds = (alarm.duration / 1000).toInt()
@@ -241,16 +238,16 @@ fun AlarmScreen(navController: NavController, task: Task, subtask: Subtask, alar
 
                 Text(
                     text = String.format("%02d:%02d:%02d", hours, minutes, seconds),
-                    fontSize = 24.sp,
+                    fontSize = 56.sp,
                     color = Color.Black
                 )
             }
         }
 
-        Spacer(modifier = Modifier.height(80.dp))
+        Spacer(modifier = Modifier.height(50.dp))
 
         Button(
-            onClick = { /* Handle surrender action */ },
+            onClick = { navController.navigate("home")},
             colors = ButtonDefaults.buttonColors(containerColor = Color.Red),
             modifier = Modifier
                 .fillMaxWidth()
@@ -261,6 +258,6 @@ fun AlarmScreen(navController: NavController, task: Task, subtask: Subtask, alar
             Text(text = "Rendirse", color = Color.White, fontSize = 18.sp)
         }
 
-        Spacer(modifier = Modifier.height(20.dp))
+        Spacer(modifier = Modifier.height(46.dp))
     }
 }

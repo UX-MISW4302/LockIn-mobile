@@ -19,8 +19,10 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.example.lockin.R
 
 @Composable
 fun BottomNavBar(navController: NavController) {
@@ -48,17 +50,16 @@ fun BottomNavBar(navController: NavController) {
             containerColor = MaterialTheme.colorScheme.surface
         ) {
             val items = listOf(
-                "home" to Icons.Filled.Home,
-                "friends" to Icons.Filled.ThumbUp,
-                "addTask" to Icons.Filled.Add,
-                "profile" to Icons.Filled.Person,
-                "settings" to Icons.Filled.Settings
+                "home" to R.drawable.home,
+                "friends" to R.drawable.friends,
+                "addTask" to R.drawable.add,
+                "profile" to R.drawable.user,
+                "settings" to R.drawable.setting
             )
 
             items.forEach { (screen, icon) ->
                 NavigationBarItem(
-                    icon = { Icon(icon, contentDescription = screen) },
-                    label = { Text(screen) },
+                    icon = { Icon(painter = painterResource(id = icon), contentDescription = screen) },
                     selected = false, // Handle selection logic
                     onClick = { navController.navigate(screen) }
                 )

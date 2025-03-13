@@ -37,6 +37,9 @@ import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.painterResource
+import com.example.lockin.R
 
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.mutableStateOf
@@ -63,7 +66,7 @@ fun SubtaskScreen(navController: NavController, task: Task, subtask: Subtask) {
 
         Text(
             text = task.name,
-            fontSize = 32.sp
+            fontSize = 36.sp
         )
 
         Spacer(modifier = Modifier.height(10.dp))
@@ -93,10 +96,14 @@ fun SubtaskScreen(navController: NavController, task: Task, subtask: Subtask) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
+            Spacer(modifier = Modifier.height(2.dp))
+
             Text(
                 text = subtask.name,
-                fontSize = 22.sp
+                fontSize = 26.sp
             )
+
+            Spacer(modifier = Modifier.height(2.dp))
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -106,16 +113,17 @@ fun SubtaskScreen(navController: NavController, task: Task, subtask: Subtask) {
                     modifier = Modifier.weight(1f),
                     horizontalAlignment = Alignment.Start
                 ) {
-                    Text(text = "Fecha de Inicio")
+                    Text(text = "Fecha de Inicio", fontSize = 18.sp)
                     Box(
                         modifier = Modifier
-                            .fillMaxWidth(0.8f)
-                            .border(1.dp, Color.Black)
-                            .background(Color.White)
-                            .padding(8.dp),
+                            .fillMaxWidth(0.8f) // Adjust the box width inside the column
+                            .height(52.dp) // Set height to match Figma
+                            .border(1.dp, Color.Black, RoundedCornerShape(12.dp)) // Border with rounded corners
+                            .clip(RoundedCornerShape(12.dp)) // Clipping for rounded edges
+                            .background(Color.White),
                         contentAlignment = Alignment.Center
                     ) {
-                        Text(text = dateFormat.format(subtask.beginningDate), color = Color.Black)
+                        Text(text = dateFormat.format(subtask.beginningDate), fontSize = 22.sp, color = Color.Black)
                     }
                 }
 
@@ -126,20 +134,24 @@ fun SubtaskScreen(navController: NavController, task: Task, subtask: Subtask) {
                     Text(
                         text = "Fecha de Fin",
                         modifier = Modifier.align(Alignment.Start)
-                            .padding(start = 32.dp)
+                            .padding(start = 32.dp),
+                            fontSize = 18.sp
                     )
                     Box(
                         modifier = Modifier
-                            .fillMaxWidth(0.8f)
-                            .border(1.dp, Color.Black)
-                            .background(Color.White)
-                            .padding(8.dp),
+                            .fillMaxWidth(0.8f) // Adjust the box width inside the column
+                            .height(52.dp) // Set height to match Figma
+                            .border(1.dp, Color.Black, RoundedCornerShape(12.dp)) // Border with rounded corners
+                            .clip(RoundedCornerShape(12.dp)) // Clipping for rounded edges
+                            .background(Color.White),
                         contentAlignment = Alignment.Center
                     ) {
-                        Text(text = dateFormat.format(subtask.finishingDate), color = Color.Black)
+                        Text(text = dateFormat.format(subtask.finishingDate), fontSize = 22.sp, color = Color.Black)
                     }
                 }
             }
+
+            Spacer(modifier = Modifier.height(10.dp))
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -149,28 +161,31 @@ fun SubtaskScreen(navController: NavController, task: Task, subtask: Subtask) {
                     modifier = Modifier.weight(1f),
                     horizontalAlignment = Alignment.Start
                 ) {
-                    Text(text = "Tiempo Estimado")
+                    Text(text = "Tiempo Estimado", fontSize = 18.sp)
                     Box(
                         modifier = Modifier
-                            .fillMaxWidth(0.8f)
-                            .border(1.dp, Color.Black)
-                            .background(Color.White)
-                            .padding(8.dp),
+                            .fillMaxWidth(0.8f) // Adjust the box width inside the column
+                            .height(52.dp) // Set height to match Figma
+                            .border(1.dp, Color.Black, RoundedCornerShape(12.dp)) // Border with rounded corners
+                            .clip(RoundedCornerShape(12.dp)) // Clipping for rounded edges
+                            .background(Color.White),
                         contentAlignment = Alignment.Center
                     ) {
                         Row(
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Icon(
-                                imageVector = Icons.Default.DateRange,
+                                painter = painterResource(id = R.drawable.time), // Load custom drawable
                                 contentDescription = "Clock",
                                 tint = Color.Black,
                                 modifier = Modifier.size(20.dp)
                             )
+
                             Spacer(modifier = Modifier.width(8.dp))
                             Text(
                                 text = formatTime(subtask.estimatedTime),
-                                color = Color.Black
+                                color = Color.Black,
+                                fontSize = 20.sp
                             )
                         }
                     }
@@ -181,31 +196,35 @@ fun SubtaskScreen(navController: NavController, task: Task, subtask: Subtask) {
                     horizontalAlignment = Alignment.End
                 ) {
                     Text(
-                        text = "Tiempo Consumido",
+                        text = "Tiempo Utilizado",
                         modifier = Modifier.align(Alignment.Start)
-                            .padding(start = 32.dp)
+                            .padding(start = 32.dp),
+                        fontSize = 18.sp
                     )
                     Box(
                         modifier = Modifier
-                            .fillMaxWidth(0.8f)
-                            .border(1.dp, Color.Black)
-                            .background(Color.White)
-                            .padding(8.dp),
+                            .fillMaxWidth(0.8f) // Adjust the box width inside the column
+                            .height(52.dp) // Set height to match Figma
+                            .border(1.dp, Color.Black, RoundedCornerShape(12.dp)) // Border with rounded corners
+                            .clip(RoundedCornerShape(12.dp)) // Clipping for rounded edges
+                            .background(Color.White),
                         contentAlignment = Alignment.Center
                     ) {
                         Row(
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Icon(
-                                imageVector = Icons.Default.DateRange,
+                                painter = painterResource(id = R.drawable.time), // Load custom drawable
                                 contentDescription = "Clock",
                                 tint = Color.Black,
                                 modifier = Modifier.size(20.dp)
                             )
+
                             Spacer(modifier = Modifier.width(8.dp))
                             Text(
                                 text = formatTime(subtask.timeConsumed),
-                                color = Color.Black
+                                color = Color.Black,
+                                fontSize = 20.sp
                             )
                         }
                     }
@@ -221,20 +240,24 @@ fun SubtaskScreen(navController: NavController, task: Task, subtask: Subtask) {
             ) {
                 Button(
                     onClick = {},
-                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF4CAF50))
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFA8E6CF)),
+                    modifier = Modifier
+                        .width(160.dp) // Set width to 160dp
                 ) {
-                    Text(text = "Completar", color = Color.Black)
+                    Text(text = "Completar", color = Color.Black, fontSize = 18.sp)
                 }
 
                 Button(
                     onClick = {},
-                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFF44336))
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFF44336)),
+                    modifier = Modifier
+                        .width(160.dp)
                 ) {
-                    Text(text = "Eliminar", color = Color.Black)
+                    Text(text = "Eliminar", color = Color.Black, fontSize = 18.sp)
                 }
             }
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(10.dp))
 
             Box(
                 modifier = Modifier
@@ -302,6 +325,8 @@ fun SubtaskScreen(navController: NavController, task: Task, subtask: Subtask) {
                     Spacer(modifier = Modifier.height(10.dp))
 
                     Button(
+                        modifier = Modifier
+                            .width(160.dp),
                         onClick = {
                             val currentTime = Date()
                             val timeParts = timeInput.split(":")
@@ -331,7 +356,7 @@ fun SubtaskScreen(navController: NavController, task: Task, subtask: Subtask) {
                         },
                         colors = ButtonDefaults.buttonColors(containerColor = Color.Black)
                     ) {
-                        Text(text = "Crear alarma", color = Color.White)
+                        Text(text = "Crear alarma", color = Color.White, fontSize = 18.sp)
                     }
                 }
             }
