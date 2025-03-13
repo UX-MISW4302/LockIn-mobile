@@ -29,7 +29,10 @@ import com.example.lockin.R
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.foundation.background
 
-// Definir la fuente correctamente
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.*
+
 @Composable
 fun LogInScreen(navController: NavController) {
 
@@ -40,6 +43,9 @@ fun LogInScreen(navController: NavController) {
         Color(0x11E551E0), // 7% Opacidad
         Color(0x03C91F22)  // 1% Opacidad
     )
+
+    var usuario by remember { mutableStateOf("") }
+    var contraseña by remember { mutableStateOf("") }
 
     Column(
         modifier = Modifier
@@ -81,10 +87,9 @@ fun LogInScreen(navController: NavController) {
 
         // Campos de usuario y contraseña
         OutlinedTextField(
-            value = "",
-            onValueChange = {},
+            value = usuario,
+            onValueChange = { usuario = it },
             label = { Text("Usuario") },
-            visualTransformation = PasswordVisualTransformation(),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
             modifier = Modifier
                 .fillMaxWidth()
@@ -94,8 +99,8 @@ fun LogInScreen(navController: NavController) {
         Spacer(modifier = Modifier.height(8.dp))
 
         OutlinedTextField(
-            value = "",
-            onValueChange = {},
+            value = contraseña,
+            onValueChange = { contraseña = it },
             label = { Text("Contraseña") },
             visualTransformation = PasswordVisualTransformation(),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
@@ -107,7 +112,7 @@ fun LogInScreen(navController: NavController) {
 
         // Botón de continuar
         Button(
-            onClick = { /* Acción de login */ },
+            onClick = { navController.navigate("home") },
             modifier = Modifier
                 .fillMaxWidth()
                 .height(50.dp),
@@ -173,8 +178,6 @@ fun LogInScreen(navController: NavController) {
                 Text(text = "Continue with Apple", color = Color.Black) // Texto negro
             }
 
-
-            // Botón de Google
             // Botón de Google
             Button(
                 onClick = { /* Acción Google */ },
