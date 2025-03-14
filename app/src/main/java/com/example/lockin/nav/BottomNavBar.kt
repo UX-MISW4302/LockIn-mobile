@@ -54,7 +54,7 @@ fun BottomNavBar(navController: NavController) {
                 "friends" to R.drawable.friends,
                 "addTask" to R.drawable.add,
                 "profile" to R.drawable.user,
-                "settings" to R.drawable.setting
+                "login" to R.drawable.setting
             )
 
             items.forEach { (screen, icon) ->

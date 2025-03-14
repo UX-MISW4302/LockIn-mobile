@@ -19,14 +19,17 @@ import com.example.lockin.ui.screens.LogInScreen
 import com.example.lockin.ui.screens.RegisterScreen
 import com.example.lockin.ui.screens.HomeScreen
 import com.example.lockin.ui.screens.TaskView
+import com.example.lockin.ui.screens.SolicitudesEnviadasScreen
 import com.example.lockin.model.Task
 import com.example.lockin.model.User
 import com.example.lockin.ui.screens.AddTask
 import com.example.lockin.ui.screens.AlarmScreen
 import com.example.lockin.ui.screens.CreateSubtaskScreen
+import com.example.lockin.ui.screens.FriendProfileScreen
 import com.example.lockin.ui.screens.GiveUpScreen
 import com.example.lockin.ui.screens.SubtaskScreen
 import com.example.lockin.ui.screens.ProfileScreen
+import com.example.lockin.ui.screens.FriendsScreen
 import com.example.yourapp.viewmodel.AlarmViewModel
 import java.util.Date
 
@@ -42,7 +45,10 @@ fun AppNavHost(navController: NavHostController, paddingValues: PaddingValues) {
         composable("register") { RegisterScreen(navController) }
         composable("home") { HomeScreen(navController) }
         composable("profile") { ProfileScreen(navController)}
+        composable("friends") { FriendsScreen(navController)}
         composable("addTask") { AddTask(navController)}
+        composable("friendprofile") { FriendProfileScreen(navController)}
+        composable("solicitudes") {SolicitudesEnviadasScreen(navController)}
         composable("giveUpScreen") { GiveUpScreen(navController)}
         composable("task/{taskId}", arguments = listOf(navArgument("taskId") { type = NavType.IntType })) { backStackEntry ->
             val taskId = backStackEntry.arguments?.getInt("taskId")
