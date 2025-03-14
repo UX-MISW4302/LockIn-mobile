@@ -29,7 +29,7 @@ class MainActivity : ComponentActivity() {
                 val currentRoute: String? = backStackEntry?.destination?.route
 
                 // Hide navbar on specific screens
-                val hideBottomNavScreens = setOf("alarm", "login", "register") // Base route name(s)
+                val hideBottomNavScreens = setOf("alarm", "login", "register", "giveUpScreen") // Base route name(s)
 
 // Check if the current route starts with any of the hidden routes
                 val showBottomNav = hideBottomNavScreens.none { currentRoute?.startsWith(it) == true } // Add more if needed

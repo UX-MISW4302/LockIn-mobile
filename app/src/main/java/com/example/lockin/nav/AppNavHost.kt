@@ -21,8 +21,10 @@ import com.example.lockin.ui.screens.HomeScreen
 import com.example.lockin.ui.screens.TaskView
 import com.example.lockin.model.Task
 import com.example.lockin.model.User
+import com.example.lockin.ui.screens.AddTask
 import com.example.lockin.ui.screens.AlarmScreen
 import com.example.lockin.ui.screens.CreateSubtaskScreen
+import com.example.lockin.ui.screens.GiveUpScreen
 import com.example.lockin.ui.screens.SubtaskScreen
 import com.example.lockin.ui.screens.ProfileScreen
 import com.example.yourapp.viewmodel.AlarmViewModel
@@ -40,6 +42,8 @@ fun AppNavHost(navController: NavHostController, paddingValues: PaddingValues) {
         composable("register") { RegisterScreen(navController) }
         composable("home") { HomeScreen(navController) }
         composable("profile") { ProfileScreen(navController)}
+        composable("addTask") { AddTask(navController)}
+        composable("giveUpScreen") { GiveUpScreen(navController)}
         composable("task/{taskId}", arguments = listOf(navArgument("taskId") { type = NavType.IntType })) { backStackEntry ->
             val taskId = backStackEntry.arguments?.getInt("taskId")
             val task = mockTasks.find { it.id == taskId } // Find the task by its ID
@@ -51,7 +55,7 @@ fun AppNavHost(navController: NavHostController, paddingValues: PaddingValues) {
 
         composable("createSubtask/{taskId}", arguments = listOf(navArgument("taskId") { type = NavType.IntType })) { backStackEntry ->
             val taskId = backStackEntry.arguments?.getInt("taskId")
-            val task = mockSubtasks.find { it.id == taskId } // Find the task by its ID
+            val task = mockTasks.find { it.id == taskId } // Find the task by its ID
 
             if (task != null) {
                 CreateSubtaskScreen(navController, task)

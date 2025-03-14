@@ -247,7 +247,7 @@ fun AlarmScreen(navController: NavController, task: Task, subtask: Subtask, alar
         Spacer(modifier = Modifier.height(50.dp))
 
         Button(
-            onClick = { navController.navigate("home")},
+            onClick = { navController.navigate("giveUpScreen")},
             colors = ButtonDefaults.buttonColors(containerColor = Color.Red),
             modifier = Modifier
                 .fillMaxWidth()

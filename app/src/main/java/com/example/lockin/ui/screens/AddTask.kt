@@ -19,17 +19,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.lockin.model.Task
 import java.text.SimpleDateFormat
 import java.util.*
 
 @Composable
-fun CreateSubtaskScreen(navController: NavController, task: Task) {
+fun AddTask(navController: NavController) {
 
     val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
 
-    var nombre by remember { mutableStateOf(task.name ?: "") }
-    var categoria by remember { mutableStateOf(task.category ?: "") }
+    var nombre by remember { mutableStateOf("") }
+    var categoria by remember { mutableStateOf("") }
     var fechaInicio by remember { mutableStateOf("Seleccionar fecha") }
     var fechaFin by remember { mutableStateOf("Seleccionar fecha") }
 
@@ -54,9 +53,8 @@ fun CreateSubtaskScreen(navController: NavController, task: Task) {
     ) {
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Screen Title
         Text(
-            text = "Nueva SubTarea",
+            text = "Nueva Tarea",
             fontSize = 32.sp
         )
 
@@ -87,29 +85,7 @@ fun CreateSubtaskScreen(navController: NavController, task: Task) {
                 .padding(horizontal = 32.dp),
             horizontalAlignment = Alignment.Start
         ) {
-
             Spacer(modifier = Modifier.height(20.dp))
-
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 32.dp),
-                horizontalAlignment = Alignment.CenterHorizontally // Centers content
-            ) {
-                Text(
-                    text = nombre,
-                    fontSize = 24.sp
-                )
-                Spacer(modifier = Modifier.height(4.dp))
-                Text(
-                    text = categoria,
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Medium,
-                    color = Color.Gray
-                )
-            }
-
-            Spacer(modifier = Modifier.height(10.dp))
 
             // Nombre
             Text(text = "Nombre *", fontSize = 18.sp)
@@ -160,16 +136,16 @@ fun CreateSubtaskScreen(navController: NavController, task: Task) {
             // Crear Button
             Box(
                 modifier = Modifier
-                    .fillMaxWidth(),
-                contentAlignment = Alignment.Center
+                    .fillMaxWidth(), // Makes the Box take full width
+                contentAlignment = Alignment.Center // Centers the button inside
             ) {
                 Box(
                     modifier = Modifier
-                        .width(180.dp)
-                        .height(60.dp)
-                        .clip(RoundedCornerShape(12.dp))
-                        .background(Color.Black)
-                        .clickable { navController.navigate("Home") },
+                        .width(180.dp)  // Rectangle width
+                        .height(60.dp)  // Rectangle height
+                        .clip(RoundedCornerShape(12.dp)) // Slightly rounded corners
+                        .background(Color.Black) // Button background
+                        .clickable { navController.navigate("Home") }, // Click action
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
