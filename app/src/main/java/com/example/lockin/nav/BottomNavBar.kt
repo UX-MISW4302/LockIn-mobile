@@ -61,7 +61,9 @@ fun BottomNavBar(navController: NavController) {
                 NavigationBarItem(
                     icon = { Icon(painter = painterResource(id = icon), contentDescription = screen) },
                     selected = false, // Handle selection logic
-                    onClick = { navController.navigate(screen) }
+                    onClick = { navController.navigate(screen) {
+                        launchSingleTop = true
+                    } }
                 )
             }
         }
