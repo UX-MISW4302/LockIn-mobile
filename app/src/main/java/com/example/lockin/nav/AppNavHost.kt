@@ -24,6 +24,7 @@ import com.example.lockin.model.User
 import com.example.lockin.ui.screens.AlarmScreen
 import com.example.lockin.ui.screens.CreateSubtaskScreen
 import com.example.lockin.ui.screens.SubtaskScreen
+import com.example.lockin.ui.screens.ProfileScreen
 import com.example.yourapp.viewmodel.AlarmViewModel
 import java.util.Date
 
@@ -32,12 +33,13 @@ fun AppNavHost(navController: NavHostController, paddingValues: PaddingValues) {
     val alarmViewModel: AlarmViewModel = viewModel()
     NavHost(
         navController = navController,
-        startDestination = "task/1",
+        startDestination = "login",
         modifier = Modifier.padding(paddingValues) // Ensures screens respect the navbar
     ) {
         composable("login") { LogInScreen(navController) }
         composable("register") { RegisterScreen(navController) }
         composable("home") { HomeScreen(navController) }
+        composable("profile") { ProfileScreen(navController)}
         composable("task/{taskId}", arguments = listOf(navArgument("taskId") { type = NavType.IntType })) { backStackEntry ->
             val taskId = backStackEntry.arguments?.getInt("taskId")
             val task = mockTasks.find { it.id == taskId } // Find the task by its ID
